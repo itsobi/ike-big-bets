@@ -19,7 +19,7 @@ export default function RootLayout({
           <main className="flex-grow bg-gradient-to-br from-slate-300 from-10% via-slate-400 via-60% to-slate-500 to-100%">
             <div className="flex">
               <Sidebar />
-              <div className="max-w-7xl mx-auto w-full">{children}</div>
+              <div className="w-full p-4">{children}</div>
             </div>
           </main>
         </body>
