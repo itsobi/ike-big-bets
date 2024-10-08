@@ -11,6 +11,7 @@ BetRivers
 Bovada
 */
 
+import { getOddsForTeam } from '@/lib/helpers';
 import { getNflShortName } from '@/lib/mappings';
 
 const formatLocalTimeShort = (utcTimeString: string): string => {
@@ -63,9 +64,9 @@ export default function GameCard({ game }: { game: Game }) {
                 {getNflShortName(game.home_team)}
               </h4>
               <div className="text-white/80 space-y-1">
-                <p>+130</p>
-                <p>-130</p>
-                <p>-130</p>
+                <p>{getOddsForTeam(game, 'h2h', game.home_team)}</p>
+                <p>{getOddsForTeam(game, 'spreads', game.home_team)}</p>
+                <p>{getOddsForTeam(game, 'totals', game.home_team)}</p>
               </div>
             </div>
           </div>
@@ -75,9 +76,9 @@ export default function GameCard({ game }: { game: Game }) {
                 {getNflShortName(game.away_team)}
               </h4>
               <div className="text-white/80 space-y-1">
-                <p>+130</p>
-                <p>-130</p>
-                <p>-130</p>
+                <p>{getOddsForTeam(game, 'h2h', game.away_team)}</p>
+                <p>{getOddsForTeam(game, 'spreads', game.away_team)}</p>
+                <p>{getOddsForTeam(game, 'totals', game.away_team)}</p>
               </div>
             </div>
           </div>
@@ -90,19 +91,11 @@ export default function GameCard({ game }: { game: Game }) {
           <div className="flex-1 p-2 border-r">
             <div className="flex flex-col space-y-1">
               <div className="border rounded-full text-white text-xs w-fit px-2 py-1">
-                <p className="lg:hidden">
-                  {formatLocalTimeShort(game.commence_time)}
-                </p>
                 <p className="hidden lg:inline-block">
                   {formatLocalTime(game.commence_time)}
                 </p>
               </div>
-              <h4 className="lg:hidden text-lg font-semibold">
-                {getNflShortName(game.home_team)}
-              </h4>
-              <h4 className="lg:hidden text-lg font-semibold">
-                {getNflShortName(game.away_team)}
-              </h4>
+
               <h4 className="hidden lg:inline-block text-lg font-semibold">
                 {game.home_team}
               </h4>
@@ -111,25 +104,25 @@ export default function GameCard({ game }: { game: Game }) {
               </h4>
             </div>
           </div>
-          <div className="p-2 border-r">
+          <div className="p-2 border-r text-center">
             <div className="flex flex-col space-y-2 text-white/80 font-semibold">
               <p className="text-slate-600">Money Line</p>
-              <p>+130</p>
-              <p>-130</p>
+              <p>{getOddsForTeam(game, 'h2h', game.home_team)}</p>
+              <p>{getOddsForTeam(game, 'h2h', game.away_team)}</p>
             </div>
           </div>
-          <div className="p-2 border-r">
+          <div className="p-2 border-r text-center">
             <div className="flex flex-col space-y-2 text-white/80 font-semibold">
               <p className="text-slate-600">Spread</p>
-              <p>+130</p>
-              <p>-130</p>
+              <p>{getOddsForTeam(game, 'spreads', game.home_team)}</p>
+              <p>{getOddsForTeam(game, 'spreads', game.away_team)}</p>
             </div>
           </div>
-          <div className="p-2">
+          <div className="p-2 text-center">
             <div className="flex flex-col space-y-2 text-white/80 font-semibold">
               <p className="text-slate-600">Over/Under</p>
-              <p>+130</p>
-              <p>-130</p>
+              <p>{getOddsForTeam(game, 'totals', game.home_team)}</p>
+              <p>{getOddsForTeam(game, 'totals', game.away_team)}</p>
             </div>
           </div>
         </div>

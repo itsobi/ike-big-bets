@@ -7,9 +7,8 @@ export default async function DashboardPage() {
 
   try {
     gameOdds = await getOdds();
-    gameOdds = gameOdds.slice(0, 10);
   } catch (err) {
-    error = 'Failed to fetch game odds';
+    error = 'Failed to get the game odds';
     console.error('Error fetching game odds:', err);
   }
 
