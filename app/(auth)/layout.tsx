@@ -3,6 +3,13 @@ import '../../app/globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import { auth } from '@clerk/nextjs/server';
 import Sidebar from '@/components/Sidebar';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Ike's Big Bets",
+  description:
+    'Make smarter bets with real-time odds, detailed game insights, and live score updates. Bet better, win more.',
+};
 
 export default function RootLayout({
   children,
