@@ -29,6 +29,20 @@ export default function RootLayout({
               <div className="w-full p-4">{children}</div>
             </div>
           </main>
+          <footer className="bg-slate-400 flex flex-col gap-2.5 items-end p-4 border-t">
+            <p className="text-slate-800/50">
+              developed by:{' '}
+              <a
+                href="https://justobii.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:underline underline-offset-2"
+              >
+                justobii.com
+              </a>
+            </p>
+            <p className="text-slate-800/50">&copy; Ike's Big Bets 2024</p>
+          </footer>
         </body>
       </html>
     </ClerkProvider>
