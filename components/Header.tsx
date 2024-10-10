@@ -13,7 +13,7 @@ export default async function Header() {
   return (
     <header className="flex items-center py-4 px-4 lg:px-12 bg-slate-400 border-b border-white">
       <div className="flex-1">
-        <p className="text-2xl font-semibold">
+        <p className="text-2xl font-semibold text-slate-900">
           Welcome, <span className="text-white">{name}</span>
         </p>
       </div>

@@ -1,3 +1,44 @@
+import {
+  formatLocalTime,
+  formatLocalTimeShort,
+  getMoneyLine,
+  getOverUnder,
+  getSpread,
+} from '@/lib/helpers';
+import { getNflShortName } from '@/lib/mappings';
+
+type MoneyLineProps = {
+  data: 'n/a' | number;
+};
+
+type SpreadProps = {
+  data:
+    | 'n/a'
+    | {
+        spread: number;
+        price: number;
+      };
+};
+
+type OverUnderData =
+  | 'n/a'
+  | {
+      over: number | undefined;
+      overPrice: number;
+      under?: undefined;
+      underPrice?: undefined;
+    }
+  | {
+      under: number | undefined;
+      underPrice: number | undefined;
+      over?: undefined;
+      overPrice?: undefined;
+    };
+
+type OverUnderProps = {
+  data: OverUnderData;
+};
+
 /*
 DraftKings
 Caesars
@@ -11,38 +52,42 @@ BetRivers
 Bovada
 */
 
-import { getOddsForTeam } from '@/lib/helpers';
-import { getNflShortName } from '@/lib/mappings';
+function MoneyLine({ data }: MoneyLineProps) {
+  if (data === 'n/a') return <p className="text-black">n/a</p>;
 
-const formatLocalTimeShort = (utcTimeString: string): string => {
-  const date = new Date(utcTimeString);
+  return <p className="text-green-300">{data}</p>;
+}
 
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  const year = date.getFullYear().toString().slice(-2);
+function SpreadTotal({ data }: SpreadProps) {
+  if (data === 'n/a') return <p className="text-black">n/a</p>;
 
-  const hours = date.getHours();
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  const formattedHours = (hours % 12 || 12).toString();
+  const { spread, price } = data;
 
-  return `${month}/${day}/${year} - ${formattedHours}:${minutes}${ampm}`;
-};
+  return (
+    <p>
+      {spread} <span className="text-green-300">{price}</span>
+    </p>
+  );
+}
 
-const formatLocalTime = (utcTimeString: string): string => {
-  const date = new Date(utcTimeString);
-  return date
-    .toLocaleString(undefined, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    })
-    .replace('at', '-');
-};
+function OverUnder({ data }: OverUnderProps) {
+  if (data === 'n/a') return <p className="text-black">n/a</p>;
 
+  const { over, overPrice, under, underPrice } = data;
+
+  return (
+    <p>
+      {over || under}{' '}
+      <span className="text-green-300">{overPrice || underPrice}</span>
+    </p>
+  );
+}
 export default function GameCard({ game }: { game: Game }) {
+  const homeTeamSpread = getSpread(game, game.home_team);
+  const awayTeamSpread = getSpread(game, game.away_team);
+  const overUnder = getOverUnder(game, game.home_team);
+  const moneyLineHome = getMoneyLine(game, game.home_team);
+  const moneyLineAway = getMoneyLine(game, game.away_team);
   return (
     <>
       {/* Mobile */}
@@ -64,9 +109,9 @@ export default function GameCard({ game }: { game: Game }) {
                 {getNflShortName(game.home_team)}
               </h4>
               <div className="text-white/80 space-y-1">
-                <p>{getOddsForTeam(game, 'h2h', game.home_team)}</p>
-                <p>{getOddsForTeam(game, 'spreads', game.home_team)}</p>
-                <p>{getOddsForTeam(game, 'totals', game.home_team)}</p>
+                <MoneyLine data={moneyLineHome} />
+                <SpreadTotal data={homeTeamSpread} />
+                <OverUnder data={overUnder} />
               </div>
             </div>
           </div>
@@ -76,9 +121,9 @@ export default function GameCard({ game }: { game: Game }) {
                 {getNflShortName(game.away_team)}
               </h4>
               <div className="text-white/80 space-y-1">
-                <p>{getOddsForTeam(game, 'h2h', game.away_team)}</p>
-                <p>{getOddsForTeam(game, 'spreads', game.away_team)}</p>
-                <p>{getOddsForTeam(game, 'totals', game.away_team)}</p>
+                <MoneyLine data={moneyLineAway} />
+                <SpreadTotal data={awayTeamSpread} />
+                <OverUnder data={overUnder} />
               </div>
             </div>
           </div>
@@ -96,33 +141,35 @@ export default function GameCard({ game }: { game: Game }) {
                 </p>
               </div>
 
-              <h4 className="hidden lg:inline-block text-lg font-semibold">
+              <h4 className="hidden lg:inline-block text-lg font-semibold text-slate-900">
                 {game.home_team}
               </h4>
-              <h4 className="hidden lg:inline-block text-lg font-semibold">
+              <h4 className="hidden lg:inline-block text-lg font-semibold text-slate-900">
                 {game.away_team}
               </h4>
             </div>
           </div>
-          <div className="p-2 border-r text-center">
-            <div className="flex flex-col space-y-2 text-white/80 font-semibold">
-              <p className="text-slate-600">Money Line</p>
-              <p>{getOddsForTeam(game, 'h2h', game.home_team)}</p>
-              <p>{getOddsForTeam(game, 'h2h', game.away_team)}</p>
+          <div className="w-[300px] flex">
+            <div className="p-2 border-r text-center">
+              <div className="flex flex-col space-y-2 text-white/80 font-semibold">
+                <p className="text-slate-600">Money Line</p>
+                <MoneyLine data={moneyLineHome} />
+                <MoneyLine data={moneyLineAway} />
+              </div>
             </div>
-          </div>
-          <div className="p-2 border-r text-center">
-            <div className="flex flex-col space-y-2 text-white/80 font-semibold">
-              <p className="text-slate-600">Spread</p>
-              <p>{getOddsForTeam(game, 'spreads', game.home_team)}</p>
-              <p>{getOddsForTeam(game, 'spreads', game.away_team)}</p>
+            <div className="p-2 border-r text-center">
+              <div className="flex flex-col space-y-2 text-white/80 font-semibold">
+                <p className="text-slate-600">Spread</p>
+                <SpreadTotal data={homeTeamSpread} />
+                <SpreadTotal data={awayTeamSpread} />
+              </div>
             </div>
-          </div>
-          <div className="p-2 text-center">
-            <div className="flex flex-col space-y-2 text-white/80 font-semibold">
-              <p className="text-slate-600">Over/Under</p>
-              <p>{getOddsForTeam(game, 'totals', game.home_team)}</p>
-              <p>{getOddsForTeam(game, 'totals', game.away_team)}</p>
+            <div className="p-2 text-center">
+              <div className="flex flex-col space-y-2 text-white/80 font-semibold">
+                <p className="text-slate-600">Over/Under</p>
+                <OverUnder data={overUnder} />
+                <OverUnder data={overUnder} />
+              </div>
             </div>
           </div>
         </div>

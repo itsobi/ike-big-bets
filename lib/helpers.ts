@@ -1,42 +1,76 @@
-type MarketEnum = 'h2h' | 'spreads' | 'totals';
-
-export const getOddsForTeam = (
-  game: Game,
-  market: MarketEnum,
-  teamName: string
-) => {
-  const marketData = game.bookmakers[0].markets.find((m) => m.key === market);
+export const getMoneyLine = (game: Game, teamName: string) => {
+  const marketData = game.bookmakers[0].markets.find((m) => m.key === 'h2h');
 
   if (!marketData) return 'n/a';
 
-  if (market === 'spreads') {
-    const point = marketData.outcomes.find((o) => o.name === teamName)?.point;
-    const price = marketData.outcomes.find((o) => o.name === teamName)?.price;
+  const moneyLine = marketData.outcomes.find((o) => o.name === teamName)?.price;
 
-    if (!price || !point) return 'n/a';
-    return `${point} ${price}`;
+  if (!moneyLine) return 'n/a';
+
+  return moneyLine;
+};
+
+export const getSpread = (game: Game, teamName: string) => {
+  const marketData = game.bookmakers[0].markets.find(
+    (m) => m.key === 'spreads'
+  );
+
+  if (!marketData) return 'n/a';
+
+  const spread = marketData.outcomes.find((o) => o.name === teamName)?.point;
+  const price = marketData.outcomes.find((o) => o.name === teamName)?.price;
+
+  if (!spread || !price) return 'n/a';
+  return { spread, price };
+};
+
+export const getOverUnder = (game: Game, teamName: string) => {
+  const marketData = game.bookmakers[0].markets.find((m) => m.key === 'totals');
+
+  if (!marketData) return 'n/a';
+
+  if (game.home_team === teamName) {
+    const overOutcome = marketData.outcomes.find((o) => o.name === 'Over');
+
+    if (!overOutcome) return 'n/a';
+    const overPrice = overOutcome?.price;
+    const overPoint = overOutcome?.point;
+
+    return { over: overPoint, overPrice: overPrice };
   }
 
-  if (market === 'totals') {
-    if (game.home_team === teamName) {
-      const overOutcome = marketData.outcomes.find((o) => o.name === 'Over');
-      const overPrice = overOutcome?.price;
-      const overPoint = overOutcome?.point;
+  const underOutcome = marketData.outcomes.find((o) => o.name === 'Under');
+  const underPrice = underOutcome?.price;
+  const underPoint = underOutcome?.point;
 
-      if (!overOutcome) return 'n/a';
-      return `${overPoint} ${overPrice}`;
-    }
-    const underOutcome = marketData.outcomes.find((o) => o.name === 'Under');
-    const underPrice = underOutcome?.price;
-    const underPoint = underOutcome?.point;
+  if (!underOutcome) return 'n/a';
+  return { under: underPoint, underPrice: underPrice };
+};
 
-    if (!underOutcome) return 'n/a';
-    return `${underPoint} ${underPrice}`;
-  }
+export const formatLocalTimeShort = (utcTimeString: string): string => {
+  const date = new Date(utcTimeString);
 
-  const odds = marketData.outcomes.find((o) => o.name === teamName)?.price;
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const year = date.getFullYear().toString().slice(-2);
 
-  if (!odds) return 'n/a odds';
+  const hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const formattedHours = (hours % 12 || 12).toString();
 
-  return odds;
+  return `${month}/${day}/${year} - ${formattedHours}:${minutes}${ampm}`;
+};
+
+export const formatLocalTime = (utcTimeString: string): string => {
+  const date = new Date(utcTimeString);
+  return date
+    .toLocaleString(undefined, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+    .replace('at', '-');
 };

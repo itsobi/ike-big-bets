@@ -23,7 +23,7 @@ export default function RootLayout({
       <html lang="en">
         <body className="flex flex-col min-h-screen">
           <Header />
-          <main className="flex-grow bg-gradient-to-br from-slate-300 from-10% via-slate-400 via-60% to-slate-500 to-100%">
+          <main className="bg-slate-400">
             <div className="flex">
               <Sidebar />
               <div className="w-full p-4">{children}</div>
