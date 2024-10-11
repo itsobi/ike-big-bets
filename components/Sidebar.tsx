@@ -1,28 +1,27 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { CircleHelp, House, Trophy } from 'lucide-react';
+import { CircleHelp, House } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import SportsSheetIcon from './SportsDrawerIcon';
+import SportsPopoverIcon from './SportsPopoverIcon';
+import SportsDrawerIcon from './SportsDrawerIcon';
+import { Fragment } from 'react';
 
-const sidebarIcons = [
+const sidebarItems = [
   {
-    iconSmall: House,
-    iconLarge: House,
+    icon: House,
     href: '/dashboard',
     label: 'Home',
   },
   {
-    iconSmall: SportsSheetIcon,
-    iconLarge: Trophy,
+    icon: SportsPopoverIcon,
     href: '/sports',
     label: 'Sports',
     removeHref: true,
   },
   {
-    iconSmall: CircleHelp,
-    iconLarge: CircleHelp,
+    icon: CircleHelp,
     href: '/faq',
     label: 'FAQ',
   },
@@ -33,32 +32,34 @@ export default function Sidebar() {
 
   return (
     <div className="bg-slate-400 p-2 lg:p-4 min-h-screen border-r border-white space-y-2">
-      {sidebarIcons.map((icon) =>
-        icon.removeHref ? (
-          <div className="flex items-center gap-2 hover:bg-white/60 p-2 rounded-full transition-all duration-300">
-            <icon.iconSmall />
-            <span className="hidden lg:inline-flex font-semibold">
-              {icon.label}
-            </span>
-          </div>
+      {sidebarItems.map((item) =>
+        item.removeHref ? (
+          <Fragment key={item.href}>
+            <div className="lg:hidden flex items-center gap-2 hover:bg-white/60 p-2 rounded-full transition-all duration-300 cursor-pointer">
+              <SportsDrawerIcon />
+            </div>
+            <div
+              key={item.href}
+              className="hidden lg:inline-flex items-center gap-2 hover:bg-white/60 p-2 rounded-full transition-all duration-300 cursor-pointer"
+            >
+              <SportsPopoverIcon />
+            </div>
+          </Fragment>
         ) : (
           <Link
-            href={icon.href}
-            key={icon.href}
+            href={item.href}
+            key={item.href}
             className={cn(
               'flex items-center gap-2 hover:bg-white/60 p-2 rounded-full transition-all duration-300',
-              pathname === icon.href && 'text-white',
-              pathname === icon.href && 'hover:bg-transparent'
+              pathname === item.href && 'text-white',
+              pathname === item.href && 'hover:bg-transparent'
             )}
           >
-            <span className="lg:hidden">
-              <icon.iconSmall />
-            </span>
-            <span className="hidden lg:inline-flex">
-              <icon.iconLarge />
+            <span>
+              <item.icon />
             </span>
             <span className="hidden lg:inline-flex font-semibold">
-              {icon.label}
+              {item.label}
             </span>
           </Link>
         )

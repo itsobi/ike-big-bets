@@ -36,7 +36,7 @@ export default function RootLayout({
                 href="https://justobii.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:underline underline-offset-2"
+                className="text-white/90 hover:underline underline-offset-2"
               >
                 justobii.com
               </a>

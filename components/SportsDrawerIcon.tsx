@@ -2,9 +2,6 @@
 
 import { ArrowLeft, ChevronRight, Trophy } from 'lucide-react';
 
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { useState } from 'react';
-import sportsData from '@/lib/sports.json';
 import {
   FaBasketballBall,
   FaBaseballBall,
@@ -18,35 +15,12 @@ import { MdOutlineSportsMartialArts, MdSportsCricket } from 'react-icons/md';
 import { GiBoxingGlove, GiSoccerBall } from 'react-icons/gi';
 import { IoMdTennisball } from 'react-icons/io';
 
-type Sport = {
-  key: string;
-  title: string;
-  description: string;
-  active: boolean;
-  has_outrights: boolean;
-};
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
-type SportGroup = {
-  label: string;
-  sports: Sport[];
-};
+import { useState } from 'react';
+import { getSports } from '@/lib/helpers';
 
-const sportsGroups = sportsData.reduce<SportGroup[]>((acc, sport) => {
-  const groupName = acc.find((group) => group.label === sport.group);
-  if (groupName) {
-    groupName.sports.push(sport);
-  } else {
-    acc.push({ label: sport.group, sports: [sport] });
-  }
-  return acc;
-}, []);
-
-// Sort sports within each group alphabetically by title
-sportsGroups.forEach((group) => {
-  group.sports.sort((a, b) => a.title.localeCompare(b.title));
-});
-
-const getIcon = (sportLabel: string) => {
+export const getIcon = (sportLabel: string) => {
   switch (sportLabel) {
     case 'American Football':
       return <FaFootballBall />;
@@ -79,35 +53,39 @@ const getIcon = (sportLabel: string) => {
   }
 };
 
-console.log(sportsGroups);
-
 export default function SportsSheetIcon() {
   const [sportLabel, setSportLabel] = useState<string | undefined>(undefined);
+  const sportsGroups = getSports();
   return (
     <Sheet>
       <SheetTrigger>
         <Trophy />
       </SheetTrigger>
-      <SheetContent side={'right'} className="p-0 bg-slate-200 overflow-auto ">
+      <SheetContent
+        side={'right'}
+        className="p-0 bg-slate-600 overflow-auto border-none"
+      >
         <div className="p-6 flex items-center space-x-2">
           {sportLabel && (
             <ArrowLeft
               onClick={() => setSportLabel(undefined)}
-              className="cursor-pointer"
+              className="cursor-pointer text-white/90"
             />
           )}
-          <h4 className="font-semibold text-xl">Sports</h4>
+          <h4 className="font-semibold text-xl text-white/90">Sports</h4>
         </div>
         {sportLabel ? (
           <div className="pt-2">
-            <h6 className="font-semibold text-center mb-2">{sportLabel}</h6>
+            <h6 className="font-semibold text-center mb-2 text-white/90 font-semibold">
+              {sportLabel}
+            </h6>
 
             {sportsGroups
               .find((group) => group.label === sportLabel)
               ?.sports.map((sport) => (
                 <div
                   key={sport.title}
-                  className="flex justify-between items-center border-b p-4 cursor-pointer hover:bg-slate-300"
+                  className="flex justify-between items-center border-b p-4 cursor-pointer font-semibold text-white/90 hover:bg-slate-300 hover:text-black"
                 >
                   {sport.title}
                 </div>
@@ -117,9 +95,9 @@ export default function SportsSheetIcon() {
           <div className="pt-2">
             {sportsGroups.map((group) => (
               <div
-                onClick={() => setSportLabel(group.label)}
                 key={group.label}
-                className="flex items-center border-b p-4 cursor-pointer hover:bg-slate-300"
+                onClick={() => setSportLabel(group.label)}
+                className="flex items-center border-b p-4 cursor-pointer hover:bg-slate-300 text-white/90 hover:text-black"
               >
                 <div className="flex-1 flex items-center gap-2 font-semibold">
                   {getIcon(group.label)}

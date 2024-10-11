@@ -149,7 +149,7 @@ export default function GameCard({ game }: { game: Game }) {
               </h4>
             </div>
           </div>
-          <div className="w-[300px] flex">
+          <div className="flex">
             <div className="p-2 border-r text-center">
               <div className="flex flex-col space-y-2 text-white/80 font-semibold">
                 <p className="text-slate-600">Money Line</p>
@@ -157,15 +157,15 @@ export default function GameCard({ game }: { game: Game }) {
                 <MoneyLine data={moneyLineAway} />
               </div>
             </div>
-            <div className="p-2 border-r text-center">
+            <div className="p-2 border-r text-center w-[100px]">
               <div className="flex flex-col space-y-2 text-white/80 font-semibold">
                 <p className="text-slate-600">Spread</p>
                 <SpreadTotal data={homeTeamSpread} />
                 <SpreadTotal data={awayTeamSpread} />
               </div>
             </div>
-            <div className="p-2 text-center">
-              <div className="flex flex-col space-y-2 text-white/80 font-semibold">
+            <div className="flex flex-col items-center p-2 text-center">
+              <div className="space-y-2 text-white/80 font-semibold">
                 <p className="text-slate-600">Over/Under</p>
                 <OverUnder data={overUnder} />
                 <OverUnder data={overUnder} />

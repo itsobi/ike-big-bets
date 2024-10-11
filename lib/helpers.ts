@@ -1,3 +1,18 @@
+import sportsData from '@/lib/sports.json';
+
+export type Sport = {
+  key: string;
+  title: string;
+  description: string;
+  active: boolean;
+  has_outrights: boolean;
+};
+
+export type SportGroup = {
+  label: string;
+  sports: Sport[];
+};
+
 export const getMoneyLine = (game: Game, teamName: string) => {
   const marketData = game.bookmakers[0].markets.find((m) => m.key === 'h2h');
 
@@ -73,4 +88,23 @@ export const formatLocalTime = (utcTimeString: string): string => {
       minute: '2-digit',
     })
     .replace('at', '-');
+};
+
+export const getSports = () => {
+  const groups = sportsData.reduce<SportGroup[]>((acc, sport) => {
+    const groupName = acc.find((group) => group.label === sport.group);
+    if (groupName) {
+      groupName.sports.push(sport);
+    } else {
+      acc.push({ label: sport.group, sports: [sport] });
+    }
+    return acc;
+  }, []);
+
+  // Sort sports within each group alphabetically by title
+  groups.forEach((group) => {
+    group.sports.sort((a, b) => a.title.localeCompare(b.title));
+  });
+
+  return groups;
 };
