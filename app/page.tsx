@@ -20,7 +20,7 @@ export default function Home() {
             </span>
           </p>
           <StyledBtn className="font-thin lg:text-lg hover:bg-slate-700">
-            <Link href="/dashboard">Get Started</Link>
+            <Link href="/sign-in">Get Started</Link>
           </StyledBtn>
         </div>
 

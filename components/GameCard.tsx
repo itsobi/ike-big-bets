@@ -53,32 +53,33 @@ Bovada
 */
 
 function MoneyLine({ data }: MoneyLineProps) {
-  if (data === 'n/a') return <p className="text-black">n/a</p>;
+  if (data === 'n/a') return <p className="text-slate-600">n/a</p>;
 
-  return <p className="text-green-300">{data}</p>;
+  return <p className="text-green-500">{data}</p>;
 }
 
 function SpreadTotal({ data }: SpreadProps) {
-  if (data === 'n/a') return <p className="text-black">n/a</p>;
+  if (data === 'n/a') return <p className="text-slate-600">n/a</p>;
 
   const { spread, price } = data;
 
   return (
     <p>
-      {spread} <span className="text-green-300">{price}</span>
+      <span className="text-slate-600">{spread}</span>{' '}
+      <span className="text-green-500">{price}</span>
     </p>
   );
 }
 
 function OverUnder({ data }: OverUnderProps) {
-  if (data === 'n/a') return <p className="text-black">n/a</p>;
+  if (data === 'n/a') return <p className="text-slate-600">n/a</p>;
 
   const { over, overPrice, under, underPrice } = data;
 
   return (
     <p>
-      {over || under}{' '}
-      <span className="text-green-300">{overPrice || underPrice}</span>
+      <span className="text-slate-600 mr-1">{over || under}</span>
+      <span className="text-green-500">{overPrice || underPrice}</span>
     </p>
   );
 }
@@ -91,10 +92,10 @@ export default function GameCard({ game }: { game: Game }) {
   return (
     <>
       {/* Mobile */}
-      <div className="lg:hidden border rounded text-slate-600">
+      <div className="lg:hidden border border-slate-600 rounded text-slate-600 shadow-lg">
         <div className="flex">
-          <div className="p-2 border-r space-y-1">
-            <div className="border px-2 text-white w-fit rounded-full text-xs">
+          <div className="p-2 border-r border-slate-600 space-y-1">
+            <div className="border border-black px-2 text-slate-600 w-fit rounded-full text-xs">
               <p>{formatLocalTimeShort(game.commence_time)}</p>
             </div>
             <div className="space-y-2">
@@ -103,12 +104,12 @@ export default function GameCard({ game }: { game: Game }) {
               <h4>Over/Under</h4>
             </div>
           </div>
-          <div className="p-2 border-r flex-1 text-center">
+          <div className="p-2 border-r border-slate-600 flex-1 text-center">
             <div className="flex flex-col space-y-1">
               <h4 className="font-semibold">
                 {getNflShortName(game.home_team)}
               </h4>
-              <div className="text-white/80 space-y-1">
+              <div className="space-y-1">
                 <MoneyLine data={moneyLineHome} />
                 <SpreadTotal data={homeTeamSpread} />
                 <OverUnder data={overUnder} />
@@ -120,7 +121,7 @@ export default function GameCard({ game }: { game: Game }) {
               <h4 className="font-semibold">
                 {getNflShortName(game.away_team)}
               </h4>
-              <div className="text-white/80 space-y-1">
+              <div className="space-y-1">
                 <MoneyLine data={moneyLineAway} />
                 <SpreadTotal data={awayTeamSpread} />
                 <OverUnder data={overUnder} />
@@ -131,33 +132,33 @@ export default function GameCard({ game }: { game: Game }) {
       </div>
 
       {/* Bigger screens */}
-      <div className="hidden lg:inline-grid border rounded text-slate-600">
+      <div className="hidden lg:inline-grid border border-slate-600 rounded text-slate-600 shadow-lg">
         <div className="flex">
-          <div className="flex-1 p-2 border-r">
+          <div className="flex-1 p-2 border-r border-slate-600">
             <div className="flex flex-col space-y-1">
-              <div className="border rounded-full text-white text-xs w-fit px-2 py-1">
-                <p className="hidden lg:inline-block">
+              <div className="border border-black rounded-full text-white text-xs w-fit px-2 py-1">
+                <p className="hidden lg:inline-block text-slate-600">
                   {formatLocalTime(game.commence_time)}
                 </p>
               </div>
 
-              <h4 className="hidden lg:inline-block text-lg font-semibold text-slate-900">
+              <h4 className="hidden lg:inline-block text-lg font-semibold text-slate-600">
                 {game.home_team}
               </h4>
-              <h4 className="hidden lg:inline-block text-lg font-semibold text-slate-900">
+              <h4 className="hidden lg:inline-block text-lg font-semibold text-slate-600">
                 {game.away_team}
               </h4>
             </div>
           </div>
           <div className="flex">
-            <div className="p-2 border-r text-center">
+            <div className="p-2 border-r border-slate-600 text-center">
               <div className="flex flex-col space-y-2 text-white/80 font-semibold">
                 <p className="text-slate-600">Money Line</p>
                 <MoneyLine data={moneyLineHome} />
                 <MoneyLine data={moneyLineAway} />
               </div>
             </div>
-            <div className="p-2 border-r text-center w-[100px]">
+            <div className="p-2 border-r border-slate-600 text-center w-[100px]">
               <div className="flex flex-col space-y-2 text-white/80 font-semibold">
                 <p className="text-slate-600">Spread</p>
                 <SpreadTotal data={homeTeamSpread} />

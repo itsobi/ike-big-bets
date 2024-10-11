@@ -31,16 +31,16 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="bg-slate-400 p-2 lg:p-4 min-h-screen border-r border-white space-y-2">
+    <div className="bg-black/95 p-2 lg:p-4 min-h-screen space-y-2 text-slate-600">
       {sidebarItems.map((item) =>
         item.removeHref ? (
           <Fragment key={item.href}>
-            <div className="lg:hidden flex items-center gap-2 hover:bg-white/60 p-2 rounded-full transition-all duration-300 cursor-pointer">
+            <div className="lg:hidden flex items-center gap-2 hover:bg-white hover:text-slate-600 p-2 rounded-full transition-all duration-300 cursor-pointer">
               <SportsDrawerIcon />
             </div>
             <div
               key={item.href}
-              className="hidden lg:inline-flex items-center gap-2 hover:bg-white/60 p-2 rounded-full transition-all duration-300 cursor-pointer"
+              className="hidden lg:inline-flex items-center gap-2 hover:bg-black hover:text-white p-2 rounded-full transition-all duration-300 cursor-pointer"
             >
               <SportsPopoverIcon />
             </div>
@@ -50,7 +50,7 @@ export default function Sidebar() {
             href={item.href}
             key={item.href}
             className={cn(
-              'flex items-center gap-2 hover:bg-white/60 p-2 rounded-full transition-all duration-300',
+              'flex items-center gap-2 hover:bg-black hover:text-white p-2 rounded-full transition-all duration-300',
               pathname === item.href && 'text-white',
               pathname === item.href && 'hover:bg-transparent'
             )}

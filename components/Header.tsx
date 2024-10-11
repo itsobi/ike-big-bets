@@ -11,10 +11,10 @@ export default async function Header() {
     )?.emailAddress;
 
   return (
-    <header className="flex items-center py-4 px-4 lg:px-12 bg-slate-400 border-b border-white">
+    <header className="flex items-center py-4 px-4 lg:px-12 bg-black/95">
       <div className="flex-1">
-        <p className="text-2xl font-semibold text-slate-900">
-          Welcome, <span className="text-white">{name}</span>
+        <p className="text-2xl font-semibold text-slate-600">
+          Welcome, <span className="text-white/90">{name}</span>
         </p>
       </div>
 
