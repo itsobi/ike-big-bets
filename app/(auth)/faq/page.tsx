@@ -34,10 +34,10 @@ export default function NeedToKnowsPage() {
       >
         {faqData.map((faq, index) => (
           <AccordionItem key={index} value={`item-${index}`}>
-            <AccordionTrigger className="text-xl">
+            <AccordionTrigger className="lg:text-xl">
               {faq.question}
             </AccordionTrigger>
-            <AccordionContent className="text-lg">
+            <AccordionContent className="lg:text-lg">
               {faq.answer}
             </AccordionContent>
           </AccordionItem>

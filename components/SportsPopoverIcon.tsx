@@ -17,7 +17,7 @@ export default function SportsPopoverIcon() {
       </PopoverTrigger>
       <PopoverContent
         side="right"
-        className="z-50 ml-7 mt-20 bg-black/90 border-none grid grid-cols-2 w-[500px] max-h-[500px] overflow-auto scrollbar-hidden"
+        className="z-50 ml-7 mt-20 bg-black/95 border-none grid grid-cols-2 w-[500px] max-h-[500px] overflow-auto scrollbar-hidden"
       >
         {sportsGroups.map((group) => (
           <div key={group.label} className="p-4 cursor-pointer">
