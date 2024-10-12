@@ -13,8 +13,14 @@ export type SportGroup = {
   sports: Sport[];
 };
 
-export const getMoneyLine = (game: Game, teamName: string) => {
-  const marketData = game.bookmakers[0].markets.find((m) => m.key === 'h2h');
+export const getMoneyLine = (
+  game: Game,
+  teamName: string,
+  randomIndex: number
+) => {
+  const marketData = game.bookmakers[randomIndex].markets.find(
+    (m) => m.key === 'h2h'
+  );
 
   if (!marketData) return 'n/a';
 
@@ -25,8 +31,12 @@ export const getMoneyLine = (game: Game, teamName: string) => {
   return moneyLine;
 };
 
-export const getSpread = (game: Game, teamName: string) => {
-  const marketData = game.bookmakers[0].markets.find(
+export const getSpread = (
+  game: Game,
+  teamName: string,
+  randomIndex: number
+) => {
+  const marketData = game.bookmakers[randomIndex].markets.find(
     (m) => m.key === 'spreads'
   );
 
@@ -39,27 +49,24 @@ export const getSpread = (game: Game, teamName: string) => {
   return { spread, price };
 };
 
-export const getOverUnder = (game: Game, teamName: string) => {
-  const marketData = game.bookmakers[0].markets.find((m) => m.key === 'totals');
+export const getOverUnder = (game: Game, randomIndex: number) => {
+  const marketData = game.bookmakers[randomIndex].markets.find(
+    (m) => m.key === 'totals'
+  );
 
   if (!marketData) return 'n/a';
 
-  if (game.home_team === teamName) {
-    const overOutcome = marketData.outcomes.find((o) => o.name === 'Over');
-
-    if (!overOutcome) return 'n/a';
-    const overPrice = overOutcome?.price;
-    const overPoint = overOutcome?.point;
-
-    return { over: overPoint, overPrice: overPrice };
-  }
-
+  const overOutcome = marketData.outcomes.find((o) => o.name === 'Over');
   const underOutcome = marketData.outcomes.find((o) => o.name === 'Under');
-  const underPrice = underOutcome?.price;
-  const underPoint = underOutcome?.point;
 
-  if (!underOutcome) return 'n/a';
-  return { under: underPoint, underPrice: underPrice };
+  if (!overOutcome || !underOutcome) return 'n/a';
+
+  return {
+    over: overOutcome.point,
+    overPrice: overOutcome.price,
+    under: underOutcome.point,
+    underPrice: underOutcome.price,
+  };
 };
 
 export const formatLocalTimeShort = (utcTimeString: string): string => {

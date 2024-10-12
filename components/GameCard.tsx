@@ -1,3 +1,4 @@
+import { getBookmakerLogo } from '@/lib/getBookmakerLogo';
 import {
   formatLocalTime,
   formatLocalTimeShort,
@@ -25,14 +26,8 @@ type OverUnderData =
   | {
       over: number | undefined;
       overPrice: number;
-      under?: undefined;
-      underPrice?: undefined;
-    }
-  | {
       under: number | undefined;
-      underPrice: number | undefined;
-      over?: undefined;
-      overPrice?: undefined;
+      underPrice: number;
     };
 
 type OverUnderProps = {
@@ -84,15 +79,22 @@ function OverUnder({ data }: OverUnderProps) {
   );
 }
 export default function GameCard({ game }: { game: Game }) {
-  const homeTeamSpread = getSpread(game, game.home_team);
-  const awayTeamSpread = getSpread(game, game.away_team);
-  const overUnder = getOverUnder(game, game.home_team);
-  const moneyLineHome = getMoneyLine(game, game.home_team);
-  const moneyLineAway = getMoneyLine(game, game.away_team);
+  const randomIndex = Math.floor(Math.random() * game.bookmakers.length);
+  const homeTeamSpread = getSpread(game, game.home_team, randomIndex);
+  const awayTeamSpread = getSpread(game, game.away_team, randomIndex);
+  const overUnder = getOverUnder(game, randomIndex);
+  const moneyLineHome = getMoneyLine(game, game.home_team, randomIndex);
+  const moneyLineAway = getMoneyLine(game, game.away_team, randomIndex);
+
+  const bookmakerName = game.bookmakers[randomIndex].title;
+
   return (
     <>
       {/* Mobile */}
-      <div className="lg:hidden border border-slate-600 rounded text-slate-600 shadow-lg">
+      <div className="lg:hidden bg-slate-300/90 rounded text-slate-600 shadow-md relative">
+        <div className="absolute top-0 right-1">
+          {getBookmakerLogo(bookmakerName)}
+        </div>
         <div className="flex">
           <div className="p-2 border-r border-slate-600 space-y-1">
             <div className="border border-black px-2 text-slate-600 w-fit rounded-full text-xs">
@@ -132,14 +134,17 @@ export default function GameCard({ game }: { game: Game }) {
       </div>
 
       {/* Bigger screens */}
-      <div className="hidden lg:inline-grid border border-slate-600 rounded text-slate-600 shadow-lg">
+      <div className="hidden lg:inline-grid bg-slate-300/90 rounded text-slate-600 shadow-md">
         <div className="flex">
           <div className="flex-1 p-2 border-r border-slate-600">
             <div className="flex flex-col space-y-1">
-              <div className="border border-black rounded-full text-white text-xs w-fit px-2 py-1">
-                <p className="hidden lg:inline-block text-slate-600">
-                  {formatLocalTime(game.commence_time)}
-                </p>
+              <div className="flex justify-between items-center">
+                <div className="border border-black rounded-full text-white text-xs w-fit px-2 py-1">
+                  <p className="hidden lg:inline-block text-slate-600">
+                    {formatLocalTime(game.commence_time)}
+                  </p>
+                </div>
+                {getBookmakerLogo(bookmakerName)}
               </div>
 
               <h4 className="hidden lg:inline-block text-lg font-semibold text-slate-600">

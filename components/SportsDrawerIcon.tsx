@@ -63,7 +63,7 @@ export default function SportsSheetIcon() {
       </SheetTrigger>
       <SheetContent
         side={'right'}
-        className="p-0 bg-black/95 overflow-auto border-none"
+        className="p-0 bg-black/90 overflow-auto border-none"
       >
         <div className="p-6 flex items-center space-x-2">
           {sportLabel && (
