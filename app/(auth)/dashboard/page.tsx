@@ -29,7 +29,7 @@ export default async function DashboardPage() {
           ))}
         </div>
       ) : (
-        <div className="text-center text-gray-600">
+        <div className="text-center text-slate-600 ">
           No game odds available at the moment.
         </div>
       )}

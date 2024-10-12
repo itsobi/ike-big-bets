@@ -26,12 +26,18 @@ const faqData = [
 export default function NeedToKnowsPage() {
   return (
     <div>
-      <h1 className="text-2xl font-semibold">Need-to-Knows</h1>
-      <Accordion type="single" collapsible className="w-full">
+      <h1 className="text-2xl font-semibold text-slate-600">Need-to-Knows</h1>
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full text-slate-600 mt-4"
+      >
         {faqData.map((faq, index) => (
           <AccordionItem key={index} value={`item-${index}`}>
-            <AccordionTrigger>{faq.question}</AccordionTrigger>
-            <AccordionContent className="text-slate-600 font-medium">
+            <AccordionTrigger className="text-xl">
+              {faq.question}
+            </AccordionTrigger>
+            <AccordionContent className="text-lg">
               {faq.answer}
             </AccordionContent>
           </AccordionItem>

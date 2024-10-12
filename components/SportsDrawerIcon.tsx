@@ -63,7 +63,7 @@ export default function SportsSheetIcon() {
       </SheetTrigger>
       <SheetContent
         side={'right'}
-        className="p-0 bg-slate-600 overflow-auto border-none"
+        className="p-0 bg-black/95 overflow-auto border-none"
       >
         <div className="p-6 flex items-center space-x-2">
           {sportLabel && (
@@ -76,7 +76,7 @@ export default function SportsSheetIcon() {
         </div>
         {sportLabel ? (
           <div className="pt-2">
-            <h6 className="font-semibold text-center mb-2 text-white/90 font-semibold">
+            <h6 className="font-semibold text-center mb-2 text-white/90">
               {sportLabel}
             </h6>
 
@@ -85,7 +85,7 @@ export default function SportsSheetIcon() {
               ?.sports.map((sport) => (
                 <div
                   key={sport.title}
-                  className="flex justify-between items-center border-b p-4 cursor-pointer font-semibold text-white/90 hover:bg-slate-300 hover:text-black"
+                  className="flex justify-between items-center border-b p-4 cursor-pointer font-semibold text-white/90 hover:bg-white hover:text-black"
                 >
                   {sport.title}
                 </div>
@@ -97,7 +97,7 @@ export default function SportsSheetIcon() {
               <div
                 key={group.label}
                 onClick={() => setSportLabel(group.label)}
-                className="flex items-center border-b p-4 cursor-pointer hover:bg-slate-300 text-white/90 hover:text-black"
+                className="flex items-center border-b p-4 cursor-pointer text-white/90 hover:bg-white hover:text-black"
               >
                 <div className="flex-1 flex items-center gap-2 font-semibold">
                   {getIcon(group.label)}

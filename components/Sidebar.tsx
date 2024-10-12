@@ -35,12 +35,12 @@ export default function Sidebar() {
       {sidebarItems.map((item) =>
         item.removeHref ? (
           <Fragment key={item.href}>
-            <div className="lg:hidden flex items-center gap-2 hover:bg-white hover:text-slate-600 p-2 rounded-full transition-all duration-300 cursor-pointer">
+            <div className="lg:hidden flex items-center gap-2 hover:text-white p-2 rounded-full transition-all duration-300 cursor-pointer">
               <SportsDrawerIcon />
             </div>
             <div
               key={item.href}
-              className="hidden lg:inline-flex items-center gap-2 hover:bg-black hover:text-white p-2 rounded-full transition-all duration-300 cursor-pointer"
+              className="hidden lg:inline-flex items-center gap-2 hover:text-white p-2 rounded-full transition-all duration-300 cursor-pointer"
             >
               <SportsPopoverIcon />
             </div>
