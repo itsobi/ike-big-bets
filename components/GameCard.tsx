@@ -1,3 +1,5 @@
+'use client';
+
 import { getBookmakerLogo } from '@/lib/getBookmakerLogo';
 import {
   formatLocalTime,
@@ -92,7 +94,7 @@ export default function GameCard({ game }: { game: Game }) {
     <>
       {/* Mobile */}
       <div className="lg:hidden bg-slate-300/90 rounded text-slate-600 shadow-md relative">
-        <div className="absolute top-0 right-1">
+        <div className="absolute top-1 right-1">
           {getBookmakerLogo(bookmakerName)}
         </div>
         <div className="flex">

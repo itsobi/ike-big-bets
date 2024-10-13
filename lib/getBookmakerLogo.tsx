@@ -1,3 +1,5 @@
+'use client';
+
 import {
   HoverCard,
   HoverCardContent,
@@ -5,97 +7,45 @@ import {
 } from '@/components/ui/hover-card';
 
 import betMgm from '@/public/images/betMGM.png';
-import betOnline from '@/public/images/betOnline.png';
-import betUs from '@/public/images/betUs.jpg';
+import betOnline from '@/public/images/betOnline.jpg';
+import betUs from '@/public/images/betUS.jpeg';
 import bovada from '@/public/images/bovada.png';
-import caesars from '@/public/images/caesars.png';
+import caesars from '@/public/images/caesars.jpeg';
 import draftKings from '@/public/images/draftKings.png';
-import fanduel from '@/public/images/fanduel.png';
+import fanduel from '@/public/images/fanduel.jpg';
 import myBookie from '@/public/images/myBookie.png';
 import Image from 'next/image';
 
 export const getBookmakerLogo = (bookmakerName: string) => {
+  const logoWrapper = (src: any, alt: string) => (
+    <div className="w-6 h-6 rounded-full flex items-center justify-center overflow-hidden">
+      <Image
+        src={src}
+        alt={alt}
+        width={24}
+        height={24}
+        className="object-contain"
+      />
+    </div>
+  );
+
   switch (bookmakerName) {
     case 'DraftKings':
-      return (
-        <div className="w-6 h-6 rounded-full flex items-center justify-center">
-          <Image
-            src={draftKings}
-            alt="Draft Kings"
-            className="w-full h-full object-contain"
-          />
-        </div>
-      );
+      return logoWrapper(draftKings, 'Draft Kings');
     case 'Caesars':
-      return (
-        <div className="w-6 h-6 rounded-full flex items-center justify-center">
-          <Image
-            src={caesars}
-            alt="Caesars"
-            className="w-full h-full object-contain"
-          />
-        </div>
-      );
+      return logoWrapper(caesars, 'Caesars');
     case 'BetUS':
-      return (
-        <div className="w-6 h-6 rounded-full flex items-center justify-center">
-          <Image
-            src={betUs}
-            alt="BetUS"
-            className="w-full h-full object-contain"
-          />
-        </div>
-      );
+      return logoWrapper(betUs, 'BetUS');
     case 'FanDuel':
-      return (
-        <div className="w-6 h-6 rounded-full flex items-center justify-center">
-          <Image
-            src={fanduel}
-            alt="Fan Duel"
-            className="w-full h-full object-contain"
-          />
-        </div>
-      );
+      return logoWrapper(fanduel, 'Fan Duel');
     case 'BetOnline.ag':
-      return (
-        <div className="w-6 h-6 rounded-full flex items-center justify-center">
-          <Image
-            src={betOnline}
-            alt="BetOnline.ag"
-            className="w-full h-full object-contain"
-          />
-        </div>
-      );
+      return logoWrapper(betOnline, 'BetOnline.ag');
     case 'MyBookie.ag':
-      return (
-        <div className="w-6 h-6 rounded-full flex items-center justify-center">
-          <Image
-            src={myBookie}
-            alt="MyBookie.ag"
-            className="w-full h-full object-contain"
-          />
-        </div>
-      );
+      return logoWrapper(myBookie, 'MyBookie.ag');
     case 'BetMGM':
-      return (
-        <div className="w-6 h-6 rounded-full flex items-center justify-center">
-          <Image
-            src={betMgm}
-            alt="BetMGM"
-            className="w-full h-full object-contain"
-          />
-        </div>
-      );
+      return logoWrapper(betMgm, 'BetMGM');
     case 'Bovada':
-      return (
-        <div className="w-6 h-6 rounded-full flex items-center justify-center">
-          <Image
-            src={bovada}
-            alt="Bovada"
-            className="w-full h-full object-contain"
-          />
-        </div>
-      );
+      return logoWrapper(bovada, 'Bovada');
     default:
       return (
         <HoverCard>
