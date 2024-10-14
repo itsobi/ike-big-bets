@@ -1,6 +1,5 @@
 import Header from '@/components/Header';
 import '../../app/globals.css';
-import { ClerkProvider } from '@clerk/nextjs';
 import { auth } from '@clerk/nextjs/server';
 import Sidebar from '@/components/Sidebar';
 import { Metadata } from 'next';

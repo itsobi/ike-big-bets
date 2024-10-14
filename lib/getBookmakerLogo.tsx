@@ -49,7 +49,7 @@ export const getBookmakerLogo = (bookmakerName: string) => {
     default:
       return (
         <HoverCard>
-          <HoverCardTrigger className="hover:underline cursor-pointer">
+          <HoverCardTrigger className="hover:underline">
             {bookmakerName.charAt(0)}
           </HoverCardTrigger>
           <HoverCardContent className="w-fit bg-black/95 text-white">
