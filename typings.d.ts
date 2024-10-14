@@ -17,7 +17,7 @@ interface Bookmaker {
   markets: Market[];
 }
 
-interface Game {
+interface Event {
   id: string;
   sport_key: string;
   sport_title: string;

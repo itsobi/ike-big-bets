@@ -1,11 +1,5 @@
 'use client';
 
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/ui/hover-card';
-
 import betMgm from '@/public/images/betMGM.png';
 import betOnline from '@/public/images/betOnline.jpg';
 import betUs from '@/public/images/betUS.jpeg';
@@ -14,6 +8,12 @@ import caesars from '@/public/images/caesars.jpeg';
 import draftKings from '@/public/images/draftKings.png';
 import fanduel from '@/public/images/fanduel.jpg';
 import myBookie from '@/public/images/myBookie.png';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import Image from 'next/image';
 
 export const getBookmakerLogo = (bookmakerName: string) => {
@@ -48,14 +48,14 @@ export const getBookmakerLogo = (bookmakerName: string) => {
       return logoWrapper(bovada, 'Bovada');
     default:
       return (
-        <HoverCard>
-          <HoverCardTrigger className="hover:underline">
-            {bookmakerName.charAt(0)}
-          </HoverCardTrigger>
-          <HoverCardContent className="w-fit bg-black/95 text-white">
-            {bookmakerName}
-          </HoverCardContent>
-        </HoverCard>
+        <TooltipProvider delayDuration={50}>
+          <Tooltip>
+            <TooltipTrigger className="hover:underline">
+              {bookmakerName.charAt(0)}
+            </TooltipTrigger>
+            <TooltipContent className="w-fit">{bookmakerName}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       );
   }
 };

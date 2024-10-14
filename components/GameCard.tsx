@@ -12,6 +12,9 @@ import { getNflShortName } from '@/lib/mappings';
 import { useEffect, useState } from 'react';
 import { Skeleton } from './ui/skeleton';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useSetAtom } from 'jotai';
+import { selectedEventAtom } from '@/atoms';
 
 type MoneyLineProps = {
   data: 'n/a' | number;
@@ -83,28 +86,37 @@ function OverUnder({ data }: OverUnderProps) {
     </p>
   );
 }
-export default function GameCard({ game }: { game: Game }) {
-  const [randomIndex, setRandomIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const homeTeamSpread = getSpread(game, game.home_team, randomIndex);
-  const awayTeamSpread = getSpread(game, game.away_team, randomIndex);
-  const overUnder = getOverUnder(game, randomIndex);
-  const moneyLineHome = getMoneyLine(game, game.home_team, randomIndex);
-  const moneyLineAway = getMoneyLine(game, game.away_team, randomIndex);
+export default function GameCard({ event }: { event: Event }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const setSelectedEvent = useSetAtom(selectedEventAtom);
 
-  const bookmakerName = game.bookmakers[randomIndex].title;
+  const homeTeamSpread = getSpread(event, event.home_team);
+  const awayTeamSpread = getSpread(event, event.away_team);
+  const overUnder = getOverUnder(event);
+  const moneyLineHome = getMoneyLine(event, event.home_team);
+  const moneyLineAway = getMoneyLine(event, event.away_team);
 
-  useEffect(() => {
-    setRandomIndex(Math.floor(Math.random() * game.bookmakers.length));
-    setIsLoading(false);
-  }, [game.bookmakers.length]);
+  const bookmakerName = event.bookmakers[0].title;
+
+  // useEffect(() => {
+  //   setRandomIndex(Math.floor(Math.random() * event.bookmakers.length));
+  //   setIsLoading(false);
+  // }, [event.bookmakers.length]);
+
+  const handleClick = (divEvent: React.MouseEvent<HTMLDivElement>) => {
+    divEvent.preventDefault();
+
+    setSelectedEvent(event);
+    router.push(`/event/${event.id}`);
+  };
 
   return (
     <>
       {/* Mobile */}
-      <Link
-        href={`/event/${game.id}`}
-        className="lg:hidden bg-slate-300/90 rounded text-slate-600 shadow-md relative hover:bg-slate-400/50"
+      <div
+        onClick={handleClick}
+        className="lg:hidden bg-slate-300/90 rounded text-slate-600 shadow-md relative hover:bg-slate-400/50 cursor-pointer"
       >
         <div className="absolute top-1 right-1">
           {isLoading ? (
@@ -116,7 +128,7 @@ export default function GameCard({ game }: { game: Game }) {
         <div className="flex">
           <div className="p-2 border-r border-slate-600 space-y-1">
             <div className="border border-black px-2 text-slate-600 w-fit rounded-full text-xs">
-              <p>{formatLocalTimeShort(game.commence_time)}</p>
+              <p>{formatLocalTimeShort(event.commence_time)}</p>
             </div>
             <div className="space-y-2">
               <h4>Money Line</h4>
@@ -127,7 +139,7 @@ export default function GameCard({ game }: { game: Game }) {
           <div className="p-2 border-r border-slate-600 flex-1 text-center">
             <div className="flex flex-col space-y-1">
               <h4 className="font-semibold">
-                {getNflShortName(game.home_team)}
+                {getNflShortName(event.home_team)}
               </h4>
               <div className="space-y-1">
                 {isLoading ? (
@@ -149,7 +161,7 @@ export default function GameCard({ game }: { game: Game }) {
           <div className="p-2 border-r flex-1 text-center">
             <div className="flex flex-col space-y-1">
               <h4 className="font-semibold">
-                {getNflShortName(game.away_team)}
+                {getNflShortName(event.away_team)}
               </h4>
               <div className="space-y-1">
                 {isLoading ? (
@@ -169,11 +181,11 @@ export default function GameCard({ game }: { game: Game }) {
             </div>
           </div>
         </div>
-      </Link>
+      </div>
 
       {/* Bigger screens */}
       <Link
-        href={`/event/${game.id}`}
+        href={`/event/${event.id}`}
         className="hidden lg:inline-grid bg-slate-300/90 rounded text-slate-600 shadow-md hover:bg-slate-400/50"
       >
         <div className="flex">
@@ -182,7 +194,7 @@ export default function GameCard({ game }: { game: Game }) {
               <div className="flex justify-between items-center">
                 <div className="border border-black rounded-full text-white text-xs w-fit px-2 py-1">
                   <p className="hidden lg:inline-block text-slate-600">
-                    {formatLocalTime(game.commence_time)}
+                    {formatLocalTime(event.commence_time)}
                   </p>
                 </div>
                 {isLoading ? (
@@ -193,10 +205,10 @@ export default function GameCard({ game }: { game: Game }) {
               </div>
 
               <h4 className="hidden lg:inline-block text-lg font-semibold text-slate-600">
-                {game.home_team}
+                {event.home_team}
               </h4>
               <h4 className="hidden lg:inline-block text-lg font-semibold text-slate-600">
-                {game.away_team}
+                {event.away_team}
               </h4>
             </div>
           </div>

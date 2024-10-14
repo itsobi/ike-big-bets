@@ -13,14 +13,8 @@ export type SportGroup = {
   sports: Sport[];
 };
 
-export const getMoneyLine = (
-  game: Game,
-  teamName: string,
-  randomIndex: number
-) => {
-  const marketData = game.bookmakers[randomIndex].markets.find(
-    (m) => m.key === 'h2h'
-  );
+export const getMoneyLine = (game: Event, teamName: string) => {
+  const marketData = game.bookmakers[0].markets.find((m) => m.key === 'h2h');
 
   if (!marketData) return 'n/a';
 
@@ -31,12 +25,8 @@ export const getMoneyLine = (
   return moneyLine;
 };
 
-export const getSpread = (
-  game: Game,
-  teamName: string,
-  randomIndex: number
-) => {
-  const marketData = game.bookmakers[randomIndex].markets.find(
+export const getSpread = (game: Event, teamName: string) => {
+  const marketData = game.bookmakers[0].markets.find(
     (m) => m.key === 'spreads'
   );
 
@@ -49,10 +39,8 @@ export const getSpread = (
   return { spread, price };
 };
 
-export const getOverUnder = (game: Game, randomIndex: number) => {
-  const marketData = game.bookmakers[randomIndex].markets.find(
-    (m) => m.key === 'totals'
-  );
+export const getOverUnder = (game: Event) => {
+  const marketData = game.bookmakers[0].markets.find((m) => m.key === 'totals');
 
   if (!marketData) return 'n/a';
 

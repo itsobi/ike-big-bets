@@ -25,7 +25,7 @@ export default async function DashboardPage() {
       ) : gameOdds ? (
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
           {gameOdds.map((game) => (
-            <GameCard key={game.id} game={game} />
+            <GameCard key={game.id} event={game} />
           ))}
         </div>
       ) : (

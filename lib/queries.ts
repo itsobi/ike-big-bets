@@ -29,6 +29,6 @@ export const getOdds = async () => {
     throw new Error('Failed to fetch odds');
   }
 
-  const data = (await response.json()) as Game[];
+  const data = (await response.json()) as Event[];
   return data;
 };

@@ -1,5 +1,6 @@
-import { UserButton } from '@clerk/nextjs';
+import { ClerkLoaded, ClerkLoading, UserButton } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
+import { Loader } from 'lucide-react';
 
 export default async function Header() {
   const user = await currentUser();
@@ -18,7 +19,12 @@ export default async function Header() {
         </p>
       </div>
 
-      <UserButton />
+      <ClerkLoading>
+        <Loader className="animate-spin text-white" size={16} />
+      </ClerkLoading>
+      <ClerkLoaded>
+        <UserButton />
+      </ClerkLoaded>
     </header>
   );
 }

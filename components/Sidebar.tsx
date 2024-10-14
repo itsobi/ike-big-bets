@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { CircleHelp, House } from 'lucide-react';
+import { ChartNoAxesColumn, CircleHelp, House } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import SportsPopoverIcon from './SportsPopoverIcon';
