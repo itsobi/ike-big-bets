@@ -5,7 +5,7 @@ import { Trophy } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 import { getSports } from '@/lib/helpers';
-import { getIcon } from './SportsDrawerIcon';
+import { getIcon } from './MobileMenu';
 
 export default function SportsPopoverIcon() {
   const sportsGroups = getSports();

@@ -1,5 +1,3 @@
-'use client';
-
 import betMgm from '@/public/images/betMGM.png';
 import betOnline from '@/public/images/betOnline.jpg';
 import betUs from '@/public/images/betUS.jpeg';

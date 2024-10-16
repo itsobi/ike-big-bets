@@ -1,21 +1,19 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { ChartNoAxesColumn, CircleHelp, House } from 'lucide-react';
+import { CircleHelp, House, Trophy } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import SportsPopoverIcon from './SportsPopoverIcon';
-import SportsDrawerIcon from './SportsDrawerIcon';
-import { Fragment } from 'react';
 
-const sidebarItems = [
+export const sidebarItems = [
   {
     icon: House,
     href: '/dashboard',
     label: 'Home',
   },
   {
-    icon: SportsPopoverIcon,
+    icon: Trophy,
     href: '/sports',
     label: 'Sports',
     removeHref: true,
@@ -31,20 +29,15 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="bg-black/95 p-2 lg:p-4 min-h-screen space-y-2 text-slate-600">
+    <div className="hidden lg:flex flex-col bg-black/95 p-2 lg:p-4 min-h-screen space-y-2 text-slate-600">
       {sidebarItems.map((item) =>
         item.removeHref ? (
-          <Fragment key={item.href}>
-            <div className="lg:hidden flex items-center gap-2 hover:text-white p-2 rounded-full transition-all duration-300 cursor-pointer">
-              <SportsDrawerIcon />
-            </div>
-            <div
-              key={item.href}
-              className="hidden lg:inline-flex items-center gap-2 hover:text-white p-2 rounded-full transition-all duration-300 cursor-pointer"
-            >
-              <SportsPopoverIcon />
-            </div>
-          </Fragment>
+          <div
+            key={item.href}
+            className="items-center gap-2 hover:text-white p-2 rounded-full transition-all duration-300 cursor-pointer"
+          >
+            <SportsPopoverIcon />
+          </div>
         ) : (
           <Link
             href={item.href}
@@ -56,11 +49,9 @@ export default function Sidebar() {
             )}
           >
             <span>
-              <item.icon />
+              <item.icon className="w-6 h-6" />
             </span>
-            <span className="hidden lg:inline-flex font-semibold">
-              {item.label}
-            </span>
+            <span className="font-semibold">{item.label}</span>
           </Link>
         )
       )}

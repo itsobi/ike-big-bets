@@ -4,6 +4,7 @@ import { auth } from '@clerk/nextjs/server';
 import Sidebar from '@/components/Sidebar';
 import { Metadata } from 'next';
 import { JotaiProvider } from '@/components/JotaiProvider';
+import { UserButton } from '@clerk/nextjs';
 
 export const metadata: Metadata = {
   title: "Ike's Big Bets",
@@ -21,12 +22,10 @@ export default function RootLayout({
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="bg-slate-200">
+      <main className="min-h-screen bg-slate-200">
         <div className="flex">
           <Sidebar />
-          <div className="w-full p-4">
-            <JotaiProvider>{children}</JotaiProvider>
-          </div>
+          <div className="w-full p-4">{children}</div>
         </div>
       </main>
       <footer className="bg-black/95 flex flex-col gap-2.5 items-end text-slate-600 p-4">
